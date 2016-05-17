@@ -1,0 +1,14 @@
+
+fizz_game = 0
+while fizz_game < 101
+  if fizz_game%3 == 0 && fizz_game%5 == 0
+    puts "FizzBuzz"
+  elsif fizz_game%3 == 0
+    puts "Fizz"
+  elsif fizz_game%5 == 0
+      puts "Buzzz"
+  else
+      puts fizz_game
+  end
+  fizz_game+=1
+end
