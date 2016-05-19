@@ -1,16 +1,20 @@
- 	
- 	
-require 'yahoo-weather'
-
-client = Weatherman::Client.new
-response = client.lookup_by_woeid 455821
-
-response.location['city'] # => "Belo Horizonte"
-response.location['country'] # => "Brazil"
-response.condition['date'] # => #<Date: -1/2,0,2299161>
-
-ptbr_client = Weatherman::Client.new :lang # => 'pt-br'
-response = ptbr_client.lookup_by_woeid 455821
-
-response.condition['text'] # => "Parcialmente Nublado"
-response.condition['country'] # => "Brasil"
+require 'barometer'
+ 
+def get_locations_weather(location)
+  Barometer.new(location).measure
+end
+ 
+weather = get_locations_weather('Chicago')
+tomorrow = Time.now.strftime('%d').to_i + 1
+ 
+weather.forecast.each do |forecast|
+  day = forecast.starts_at.day
+  
+  if day == tomorrow
+    dayName = 'Tomorrow'
+  else
+    dayName = forecast.starts_at.strftime('%A')
+  end
+ 
+  puts dayName + ' is going to be' + forecast.icon + ' with a low of' + forecast.low.f.to_s + ' and a high of ' + forecast.high.f.to_s
+end
